@@ -5,3 +5,11 @@ export const createGame = game => {
     data: { game },
   })
 };
+
+export const fetchGame = game => {
+  return $.ajax({
+    method: "GET",
+    url: '/api/game',
+    data: { game }
+  })
+};

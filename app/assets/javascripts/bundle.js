@@ -90,13 +90,14 @@
 /*!******************************************!*\
   !*** ./frontend/actions/game_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_GAME, createGame */
+/*! exports provided: RECEIVE_GAME, createGame, fetchGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_GAME", function() { return RECEIVE_GAME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
 /* harmony import */ var _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/game_api_util */ "./frontend/util/game_api_util.js");
 
 var RECEIVE_GAME = 'RECEIVE_GAME';
@@ -111,6 +112,13 @@ var receiveGame = function receiveGame(game) {
 var createGame = function createGame(game) {
   return function (dispatch) {
     return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["createGame"](game).then(function (game) {
+      return dispatch(receiveGame(game));
+    });
+  };
+};
+var fetchGame = function fetchGame(game) {
+  return function (dispatch) {
+    return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchGame"](game).then(function (game) {
       return dispatch(receiveGame(game));
     });
   };
@@ -304,8 +312,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state) {
+  var currentGame = state.game || {};
   return {
-    name: ""
+    currentGame: currentGame
   };
 };
 
@@ -313,6 +322,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     createGame: function createGame(game) {
       return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["createGame"])(game));
+    },
+    fetchGame: function fetchGame(game) {
+      return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["fetchGame"])(game));
     }
   };
 };
@@ -513,15 +525,25 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/game_api_util.js ***!
   \****************************************/
-/*! exports provided: createGame */
+/*! exports provided: createGame, fetchGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
 var createGame = function createGame(game) {
   return $.ajax({
     method: "POST",
+    url: '/api/game',
+    data: {
+      game: game
+    }
+  });
+};
+var fetchGame = function fetchGame(game) {
+  return $.ajax({
+    method: "GET",
     url: '/api/game',
     data: {
       game: game

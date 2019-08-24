@@ -13,3 +13,9 @@ export const createGame = (game) => dispatch => {
     (game) => dispatch(receiveGame(game))
   )
 };
+
+export const fetchGame = (game) => dispatch => {
+  return GameApiUtil.fetchGame(game).then(
+    (game) => dispatch(receiveGame(game))
+  )
+};
