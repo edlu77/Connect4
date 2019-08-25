@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/game_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_GAME, createGame, fetchGame */
+/*! exports provided: RECEIVE_GAME, createGame, fetchGame, updateGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_GAME", function() { return RECEIVE_GAME; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGame", function() { return updateGame; });
 /* harmony import */ var _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/game_api_util */ "./frontend/util/game_api_util.js");
 
 var RECEIVE_GAME = 'RECEIVE_GAME';
@@ -109,9 +110,9 @@ var receiveGame = function receiveGame(game) {
   };
 };
 
-var createGame = function createGame(game) {
+var createGame = function createGame(info) {
   return function (dispatch) {
-    return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["createGame"](game).then(function (game) {
+    return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["createGame"](info).then(function (game) {
       return dispatch(receiveGame(game));
     });
   };
@@ -119,6 +120,13 @@ var createGame = function createGame(game) {
 var fetchGame = function fetchGame(game) {
   return function (dispatch) {
     return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchGame"](game).then(function (game) {
+      return dispatch(receiveGame(game));
+    });
+  };
+};
+var updateGame = function updateGame(info) {
+  return function (dispatch) {
+    return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["updateGame"](info).then(function (game) {
       return dispatch(receiveGame(game));
     });
   };
@@ -237,9 +245,11 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Game).call(this, props));
     _this.state = {
       username: "",
-      gameName: ""
+      gameName: "",
+      board: _this.props.board
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -247,10 +257,11 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var game = {
-        name: this.state.gameName
+      var info = {
+        name: this.state.gameName,
+        user: this.state.username
       };
-      this.props.createGame(game);
+      this.props.createGame(info);
     }
   }, {
     key: "update",
@@ -262,8 +273,38 @@ function (_React$Component) {
       };
     }
   }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      e.preventDefault();
+      var row = e.target.outerHTML[15];
+      var info = {
+        name: this.state.gameName,
+        row: row
+      };
+      this.props.updateGame(info);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
+      var renderedBoard = this.props.board.map(function (row) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row0",
+          onClick: _this3.handleClick
+        }, "[ ", row[0], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row1",
+          onClick: _this3.handleClick
+        }, "[ ", row[1], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row2",
+          onClick: _this3.handleClick
+        }, "[ ", row[2], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row3",
+          onClick: _this3.handleClick
+        }, "[ ", row[3], " ]"));
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "login-form-box"
@@ -283,7 +324,7 @@ function (_React$Component) {
         className: "info-submit",
         type: "submit",
         value: "Submit"
-      })));
+      })), renderedBoard);
     }
   }]);
 
@@ -313,18 +354,23 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state) {
   var currentGame = state.game || {};
+  var board = currentGame.board || [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   return {
-    currentGame: currentGame
+    currentGame: currentGame,
+    board: board
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    createGame: function createGame(game) {
-      return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["createGame"])(game));
+    createGame: function createGame(info) {
+      return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["createGame"])(info));
     },
     fetchGame: function fetchGame(game) {
       return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["fetchGame"])(game));
+    },
+    updateGame: function updateGame(info) {
+      return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["updateGame"])(info));
     }
   };
 };
@@ -525,13 +571,14 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/game_api_util.js ***!
   \****************************************/
-/*! exports provided: createGame, fetchGame */
+/*! exports provided: createGame, fetchGame, updateGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGame", function() { return updateGame; });
 var createGame = function createGame(game) {
   return $.ajax({
     method: "POST",
@@ -544,6 +591,15 @@ var createGame = function createGame(game) {
 var fetchGame = function fetchGame(game) {
   return $.ajax({
     method: "GET",
+    url: '/api/game',
+    data: {
+      game: game
+    }
+  });
+};
+var updateGame = function updateGame(game) {
+  return $.ajax({
+    method: "PATCH",
     url: '/api/game',
     data: {
       game: game

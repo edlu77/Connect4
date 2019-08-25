@@ -13,3 +13,11 @@ export const fetchGame = game => {
     data: { game }
   })
 };
+
+export const updateGame = game => {
+  return $.ajax({
+    method: "PATCH",
+    url: '/api/game',
+    data: { game }
+  })
+}

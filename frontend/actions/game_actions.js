@@ -8,14 +8,20 @@ const receiveGame = (game) => {
   })
 };
 
-export const createGame = (game) => dispatch => {
-  return GameApiUtil.createGame(game).then(
+export const createGame = (info) => dispatch => {
+  return GameApiUtil.createGame(info).then(
     (game) => dispatch(receiveGame(game))
   )
 };
 
 export const fetchGame = (game) => dispatch => {
   return GameApiUtil.fetchGame(game).then(
+    (game) => dispatch(receiveGame(game))
+  )
+};
+
+export const updateGame = (info) => dispatch => {
+  return GameApiUtil.updateGame(info).then(
     (game) => dispatch(receiveGame(game))
   )
 };
