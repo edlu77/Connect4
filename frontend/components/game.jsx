@@ -24,27 +24,36 @@ class Game extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const row = e.target.outerHTML[15];
-    const info = {name: this.state.gameName, row: row};
+    const column = e.target.outerHTML[15];
+    const info = {name: this.state.gameName, column: column};
     this.props.updateGame(info);
   }
 
 
   render () {
-    const renderedBoard = this.props.board.map((row) => {
+    const renderedBoard = this.props.board.map((col) => {
       return (
-        <div className="row">
-          <div className="row0" onClick={this.handleClick}>
-            [ {row[0]} ]
+        <div className="col">
+          <div className="col0" onClick={this.handleClick}>
+            [ {col[0]} ]
           </div>
-          <div className="row1" onClick={this.handleClick}>
-            [ {row[1]} ]
+          <div className="col1" onClick={this.handleClick}>
+            [ {col[1]} ]
           </div>
-          <div className="row2" onClick={this.handleClick}>
-            [ {row[2]} ]
+          <div className="col2" onClick={this.handleClick}>
+            [ {col[2]} ]
           </div>
-          <div className="row3" onClick={this.handleClick}>
-            [ {row[3]} ]
+          <div className="col3" onClick={this.handleClick}>
+            [ {col[3]} ]
+          </div>
+          <div className="col4" onClick={this.handleClick}>
+            [ {col[4]} ]
+          </div>
+          <div className="col5" onClick={this.handleClick}>
+            [ {col[5]} ]
+          </div>
+          <div className="col6" onClick={this.handleClick}>
+            [ {col[6]} ]
           </div>
         </div>
       )

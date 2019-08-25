@@ -276,10 +276,10 @@ function (_React$Component) {
     key: "handleClick",
     value: function handleClick(e) {
       e.preventDefault();
-      var row = e.target.outerHTML[15];
+      var column = e.target.outerHTML[15];
       var info = {
         name: this.state.gameName,
-        row: row
+        column: column
       };
       this.props.updateGame(info);
     }
@@ -288,22 +288,31 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var renderedBoard = this.props.board.map(function (row) {
+      var renderedBoard = this.props.board.map(function (col) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row"
+          className: "col"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row0",
+          className: "col0",
           onClick: _this3.handleClick
-        }, "[ ", row[0], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row1",
+        }, "[ ", col[0], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col1",
           onClick: _this3.handleClick
-        }, "[ ", row[1], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row2",
+        }, "[ ", col[1], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col2",
           onClick: _this3.handleClick
-        }, "[ ", row[2], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row3",
+        }, "[ ", col[2], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col3",
           onClick: _this3.handleClick
-        }, "[ ", row[3], " ]"));
+        }, "[ ", col[3], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col4",
+          onClick: _this3.handleClick
+        }, "[ ", col[4], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col5",
+          onClick: _this3.handleClick
+        }, "[ ", col[5], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col6",
+          onClick: _this3.handleClick
+        }, "[ ", col[6], " ]"));
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
@@ -354,7 +363,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state) {
   var currentGame = state.game || {};
-  var board = currentGame.board || [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  var board = currentGame.board || [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
   return {
     currentGame: currentGame,
     board: board
