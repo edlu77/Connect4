@@ -188,7 +188,7 @@ var App = function App() {
     className: "site-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     className: "header"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_game_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  }, "CONNECT 4 by Edward Lu"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_game_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -315,6 +315,7 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var playerColor = this.props.currentPlayer === this.props.currentPlayers[0] ? "red" : "blue";
       var renderedBoard = this.props.board.map(function (row, idx) {
         var colors = [];
 
@@ -335,59 +336,79 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row0 ".concat(colors[0]),
           onClick: _this3.handleClick
-        }, row[0]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row1 ".concat(colors[1]),
           onClick: _this3.handleClick
-        }, row[1]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row2 ".concat(colors[2]),
           onClick: _this3.handleClick
-        }, row[2]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row3 ".concat(colors[3]),
           onClick: _this3.handleClick
-        }, row[3]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row4 ".concat(colors[4]),
           onClick: _this3.handleClick
-        }, row[4]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row5 ".concat(colors[5]),
           onClick: _this3.handleClick
-        }, row[5]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row6 ".concat(colors[6]),
           onClick: _this3.handleClick
-        }, row[6]));
+        }));
       });
 
+      if (this.props.status === "making game") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleSubmit,
+          className: "loginform"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "username-input",
+          value: this.state.username,
+          onChange: this.update('username'),
+          className: "username-input",
+          placeholder: "Username"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "gamename-input",
+          value: this.state.gameName,
+          onChange: this.update('gameName'),
+          className: "gamename-input",
+          placeholder: "Game name"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "numplayers-input",
+          value: this.state.numplayers,
+          onChange: this.update('numplayers'),
+          className: "numplayers-input",
+          placeholder: "1 or 2 players?"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "info-submit",
+          type: "submit",
+          value: "Submit"
+        }));
+      }
+
+      if (this.props.status === "waiting") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "gamename"
+        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Waiting for Player 2..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "gameboard"
+        }, renderedBoard));
+      }
+
       if (this.props.status === "won") {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, " wins!"), renderedBoard);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "gamename"
+        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, " wins!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "gameboard"
+        }, renderedBoard));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "gamearea"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit,
-        className: "login-form-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "username",
-        value: this.state.username,
-        onChange: this.update('username'),
-        className: "username-input",
-        placeholder: "Username"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "gamename",
-        value: this.state.gameName,
-        onChange: this.update('gameName'),
-        className: "gamename-input",
-        placeholder: "Game name"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "numplayers",
-        value: this.state.numplayers,
-        onChange: this.update('numplayers'),
-        className: "numplayers-input",
-        placeholder: "1 or 2 players?"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "info-submit",
-        type: "submit",
-        value: "Submit"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, "'s turn"), renderedBoard);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "gamename"
+      }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, "'s turn (", playerColor, ")"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "gameboard"
+      }, renderedBoard));
     }
   }]);
 
@@ -417,13 +438,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state) {
   var currentGame = state.game || {};
+  var currentPlayers = currentGame.current_players || ["", ""];
   var currentPlayer = currentGame.current_player || "unknown";
   var board = currentGame.board || [[" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "]];
   var status = currentGame.status || "making game";
   return {
     currentPlayer: currentPlayer,
     board: board,
-    status: status
+    status: status,
+    currentPlayers: currentPlayers
   };
 };
 

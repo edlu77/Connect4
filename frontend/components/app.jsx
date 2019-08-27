@@ -6,6 +6,7 @@ const App = () => {
   return (
     <div className="site-content">
       <header className="header">
+        CONNECT 4 by Edward Lu
       </header>
       <GameContainer />
     </div>

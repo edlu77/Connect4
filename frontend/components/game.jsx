@@ -46,6 +46,8 @@ class Game extends React.Component {
   }
 
   render () {
+
+    const playerColor = this.props.currentPlayer === this.props.currentPlayers[0] ? "red" : "blue"
     const renderedBoard = this.props.board.map((row, idx) => {
       let colors = [];
       for (let i = 0; i < row.length; i++) {
@@ -61,57 +63,39 @@ class Game extends React.Component {
       return (
         <div className="row" key={idx}>
           <div className={`row0 ${colors[0]}`} onClick={this.handleClick}>
-            {row[0]}
           </div>
           <div className={`row1 ${colors[1]}`} onClick={this.handleClick}>
-            {row[1]}
           </div>
           <div className={`row2 ${colors[2]}`} onClick={this.handleClick}>
-            {row[2]}
           </div>
           <div className={`row3 ${colors[3]}`} onClick={this.handleClick}>
-            {row[3]}
           </div>
           <div className={`row4 ${colors[4]}`} onClick={this.handleClick}>
-            {row[4]}
           </div>
           <div className={`row5 ${colors[5]}`} onClick={this.handleClick}>
-            {row[5]}
           </div>
           <div className={`row6 ${colors[6]}`} onClick={this.handleClick}>
-            {row[6]}
           </div>
         </div>
       )
     })
 
-    if (this.props.status === "won") {
+    if (this.props.status === "making game") {
       return (
-        <div>
-          <div>
-            {this.props.currentPlayer} wins!
-          </div>
-          {renderedBoard}
-        </div>
-      )
-    }
-
-    return (
-      <div className="gamearea">
-        <form onSubmit={this.handleSubmit} className='login-form-box'>
-          <input type="username"
+        <form onSubmit={this.handleSubmit} className='loginform'>
+          <input type="username-input"
             value={this.state.username}
             onChange={this.update('username')}
             className="username-input"
             placeholder="Username"
           />
-          <input type="gamename"
+          <input type="gamename-input"
             value={this.state.gameName}
             onChange={this.update('gameName')}
             className="gamename-input"
             placeholder="Game name"
           />
-          <input type="numplayers"
+          <input type="numplayers-input"
             value={this.state.numplayers}
             onChange={this.update('numplayers')}
             className="numplayers-input"
@@ -119,11 +103,52 @@ class Game extends React.Component {
           />
         <input className="info-submit" type="submit" value="Submit" />
         </form>
+      )
+    }
 
+    if (this.props.status === "waiting") {
+      return (
         <div>
-          {this.props.currentPlayer}'s turn
+          <h1 className="gamename">
+            {this.state.gameName}
+          </h1>
+          <div>
+            Waiting for Player 2...
+          </div>
+          <div className="gameboard">
+            {renderedBoard}
+          </div>
         </div>
-        {renderedBoard}
+      )
+    }
+
+    if (this.props.status === "won") {
+      return (
+        <div>
+          <h1 className="gamename">
+            {this.state.gameName}
+          </h1>
+          <div>
+            {this.props.currentPlayer} wins!
+          </div>
+          <div className="gameboard">
+            {renderedBoard}
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="gamearea">
+        <h1 className="gamename">
+          {this.state.gameName}
+        </h1>
+        <div>
+          {this.props.currentPlayer}'s turn ({playerColor})
+        </div>
+        <div className="gameboard">
+          {renderedBoard}
+        </div>
       </div>
     );
   };
