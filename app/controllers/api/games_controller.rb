@@ -46,7 +46,7 @@ class Api::GamesController < ApplicationController
     @game = Game.find_by_name(params[:game][:name]) || {}
     if params[:game][:numplayers] == "2"
       # drop piece, check state of game
-      if @game.current_player == @game.current_players[0]
+      if @game.current_player == @game.current_players[0] && @game.current_player == params[:game][:currentPlayer]
         @game.board = self.drop_piece(@game.board, params[:game][:column].to_i, "x")
       else
         @game.board = self.drop_piece(@game.board, params[:game][:column].to_i, "o")

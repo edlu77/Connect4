@@ -33,7 +33,7 @@ class Game extends React.Component {
       return
     }
     if (this.props.currentPlayer === this.state.username) {
-      const info = {name: this.state.gameName, column: column, numplayers: this.state.numplayers};
+      const info = {name: this.state.gameName, column: column, numplayers: this.state.numplayers, currentPlayer: this.state.username};
       this.props.updateGame(info);
     }
   }

@@ -299,7 +299,8 @@ function (_React$Component) {
         var info = {
           name: this.state.gameName,
           column: column,
-          numplayers: this.state.numplayers
+          numplayers: this.state.numplayers,
+          currentPlayer: this.state.username
         };
         this.props.updateGame(info);
       }
