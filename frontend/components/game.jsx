@@ -25,7 +25,7 @@ class Game extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    if (this.state.username != this.props.currentPlayer || this.props.status === "won") {
+    if (this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
       return
     }
     const column = e.target.outerHTML[15];

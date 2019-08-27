@@ -285,7 +285,7 @@ function (_React$Component) {
     value: function handleClick(e) {
       e.preventDefault();
 
-      if (this.state.username != this.props.currentPlayer || this.props.status === "won") {
+      if (this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
         return;
       }
 
