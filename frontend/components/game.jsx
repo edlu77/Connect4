@@ -48,7 +48,6 @@ class Game extends React.Component {
   render () {
     const renderedBoard = this.props.board.map((row, idx) => {
       let colors = [];
-
       for (let i = 0; i < row.length; i++) {
         if (row[i] === "x") {
           colors.push("red")
