@@ -7,6 +7,7 @@ class Game extends React.Component {
     this.state = {username: "", gameName: "", numplayers: "", board: this.props.board}
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
     this.refresh = this.refresh.bind(this);
     setInterval(() => {this.refresh()}, 500);
   };
@@ -15,6 +16,15 @@ class Game extends React.Component {
     e.preventDefault();
     const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
     this.props.createGame(info);
+  }
+
+  handleRestart(e) {
+    e.preventDefault();
+    const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
+    if (this.props.status === "won") {
+      this.props.deleteGame(info)
+      this.props.createGame(info)
+    }
   }
 
   update(field) {
@@ -39,10 +49,7 @@ class Game extends React.Component {
   }
 
   refresh(e) {
-    if (this.props.status === "won") {
-      const info = {name: this.state.gameName};
-      this.props.deleteGame(info);
-    } else if (this.props.status === "waiting" || this.props.status === "play") {
+    if (this.props.status === "waiting" || this.props.status === "play" || this.props.status === "won") {
       const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
       this.props.createGame(info);
     }
@@ -132,7 +139,7 @@ class Game extends React.Component {
           </h1>
           <div className="statuspanel">
             {this.props.currentPlayer} wins!
-            <button onClick={this.handleSubmit}>
+            <button onClick={this.handleRestart}>
               New Game
             </button>
           </div>

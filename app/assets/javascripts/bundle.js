@@ -253,6 +253,7 @@ function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.handleRestart = _this.handleRestart.bind(_assertThisInitialized(_this));
     _this.refresh = _this.refresh.bind(_assertThisInitialized(_this));
     setInterval(function () {
       _this.refresh();
@@ -270,6 +271,21 @@ function (_React$Component) {
         numplayers: this.state.numplayers
       };
       this.props.createGame(info);
+    }
+  }, {
+    key: "handleRestart",
+    value: function handleRestart(e) {
+      e.preventDefault();
+      var info = {
+        name: this.state.gameName,
+        user: this.state.username,
+        numplayers: this.state.numplayers
+      };
+
+      if (this.props.status === "won") {
+        this.props.deleteGame(info);
+        this.props.createGame(info);
+      }
     }
   }, {
     key: "update",
@@ -308,18 +324,13 @@ function (_React$Component) {
   }, {
     key: "refresh",
     value: function refresh(e) {
-      if (this.props.status === "won") {
+      if (this.props.status === "waiting" || this.props.status === "play" || this.props.status === "won") {
         var info = {
-          name: this.state.gameName
-        };
-        this.props.deleteGame(info);
-      } else if (this.props.status === "waiting" || this.props.status === "play") {
-        var _info = {
           name: this.state.gameName,
           user: this.state.username,
           numplayers: this.state.numplayers
         };
-        this.props.createGame(_info);
+        this.props.createGame(info);
       }
     }
   }, {
@@ -412,7 +423,7 @@ function (_React$Component) {
         }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "statuspanel"
         }, this.props.currentPlayer, " wins!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          onClick: this.handleSubmit
+          onClick: this.handleRestart
         }, "New Game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "gameboard"
         }, renderedBoard));
