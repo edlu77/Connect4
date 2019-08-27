@@ -1,3 +1,13 @@
-.col {
+.row {
   display: flex;
+  width: 515px;
+  justify-content: space-between;
+}
+
+.row > div {
+  width: 75px;
+  height: 75px;
+  border: solid black 1px;
+  display: flex;
+  justify-content: center;
 }

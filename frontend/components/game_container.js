@@ -4,10 +4,13 @@ import Game from './game';
 
 const mapStateToProps = (state) => {
   const currentGame = state.game || {};
-  const board = currentGame.board || [[0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
+  const currentPlayer = currentGame.current_player || "unknown";
+  const board = currentGame.board || [[" ", " ", " ", " ", " ", " ", " "],[" ", " ", " ", " ", " ", " ", " "],[" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "]]
+  const status = currentGame.status || "making game";
   return ({
-    currentGame: currentGame,
+    currentPlayer: currentPlayer,
     board: board,
+    status: status,
   })
 };
 

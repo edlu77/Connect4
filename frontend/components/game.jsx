@@ -1,18 +1,19 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 
 class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: "", gameName: "", board: this.props.board};
+    this.state = {username: "", gameName: "", numplayers: "", board: this.props.board}
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.refresh = this.refresh.bind(this);
+    setInterval(() => {this.refresh()}, 500);
   };
 
   handleSubmit(e) {
     e.preventDefault();
-    const info = {name: this.state.gameName, user: this.state.username};
+    const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
     this.props.createGame(info);
   }
 
@@ -24,43 +25,68 @@ class Game extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
+    if (this.state.username != this.props.currentPlayer || this.props.status === "won") {
+      return
+    }
     const column = e.target.outerHTML[15];
-    const info = {name: this.state.gameName, column: column};
-    this.props.updateGame(info);
+    if (this.props.board[0][parseInt(column)] != " ") {
+      return
+    }
+    if (this.props.currentPlayer === this.state.username) {
+      const info = {name: this.state.gameName, column: column, numplayers: this.state.numplayers};
+      this.props.updateGame(info);
+    }
   }
 
+  refresh(e) {
+    if (this.props.status === "waiting" || this.props.status === "play") {
+      const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
+      this.props.createGame(info);
+    }
+  }
 
   render () {
-    const renderedBoard = this.props.board.map((col) => {
+    const renderedBoard = this.props.board.map((row) => {
       return (
-        <div className="col">
-          <div className="col0" onClick={this.handleClick}>
-            [ {col[0]} ]
+        <div className="row">
+          <div className="row0" onClick={this.handleClick}>
+            {row[0]}
           </div>
-          <div className="col1" onClick={this.handleClick}>
-            [ {col[1]} ]
+          <div className="row1" onClick={this.handleClick}>
+            {row[1]}
           </div>
-          <div className="col2" onClick={this.handleClick}>
-            [ {col[2]} ]
+          <div className="row2" onClick={this.handleClick}>
+            {row[2]}
           </div>
-          <div className="col3" onClick={this.handleClick}>
-            [ {col[3]} ]
+          <div className="row3" onClick={this.handleClick}>
+            {row[3]}
           </div>
-          <div className="col4" onClick={this.handleClick}>
-            [ {col[4]} ]
+          <div className="row4" onClick={this.handleClick}>
+            {row[4]}
           </div>
-          <div className="col5" onClick={this.handleClick}>
-            [ {col[5]} ]
+          <div className="row5" onClick={this.handleClick}>
+            {row[5]}
           </div>
-          <div className="col6" onClick={this.handleClick}>
-            [ {col[6]} ]
+          <div className="row6" onClick={this.handleClick}>
+            {row[6]}
           </div>
         </div>
       )
     })
 
+    if (this.props.status === "won") {
+      return (
+        <div>
+          <div>
+            {this.props.currentPlayer} wins!
+          </div>
+          {renderedBoard}
+        </div>
+      )
+    }
+
     return (
-      <div>
+      <div className="gamearea">
         <form onSubmit={this.handleSubmit} className='login-form-box'>
           <input type="username"
             value={this.state.username}
@@ -68,16 +94,24 @@ class Game extends React.Component {
             className="username-input"
             placeholder="Username"
           />
-
           <input type="gamename"
             value={this.state.gameName}
             onChange={this.update('gameName')}
             className="gamename-input"
             placeholder="Game name"
           />
-
+          <input type="numplayers"
+            value={this.state.numplayers}
+            onChange={this.update('numplayers')}
+            className="numplayers-input"
+            placeholder="1 or 2 players?"
+          />
         <input className="info-submit" type="submit" value="Submit" />
         </form>
+
+        <div>
+          {this.props.currentPlayer}'s turn
+        </div>
         {renderedBoard}
       </div>
     );

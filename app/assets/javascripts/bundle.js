@@ -188,9 +188,7 @@ var App = function App() {
     className: "site-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     className: "header"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "content-main"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_game_container__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_game_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -208,7 +206,6 @@ var App = function App() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -231,7 +228,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var Game =
 /*#__PURE__*/
 function (_React$Component) {
@@ -246,10 +242,15 @@ function (_React$Component) {
     _this.state = {
       username: "",
       gameName: "",
+      numplayers: "",
       board: _this.props.board
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.refresh = _this.refresh.bind(_assertThisInitialized(_this));
+    setInterval(function () {
+      _this.refresh();
+    }, 500);
     return _this;
   }
 
@@ -259,7 +260,8 @@ function (_React$Component) {
       e.preventDefault();
       var info = {
         name: this.state.gameName,
-        user: this.state.username
+        user: this.state.username,
+        numplayers: this.state.numplayers
       };
       this.props.createGame(info);
     }
@@ -276,45 +278,77 @@ function (_React$Component) {
     key: "handleClick",
     value: function handleClick(e) {
       e.preventDefault();
+
+      if (this.state.username != this.props.currentPlayer || this.props.status === "won") {
+        return;
+      }
+
       var column = e.target.outerHTML[15];
-      var info = {
-        name: this.state.gameName,
-        column: column
-      };
-      this.props.updateGame(info);
+
+      if (this.props.board[0][parseInt(column)] != " ") {
+        return;
+      }
+
+      if (this.props.currentPlayer === this.state.username) {
+        var info = {
+          name: this.state.gameName,
+          column: column,
+          numplayers: this.state.numplayers
+        };
+        this.props.updateGame(info);
+      }
+    }
+  }, {
+    key: "refresh",
+    value: function refresh(e) {
+      if (this.props.status === "waiting" || this.props.status === "play") {
+        var info = {
+          name: this.state.gameName,
+          user: this.state.username,
+          numplayers: this.state.numplayers
+        };
+        this.props.createGame(info);
+      }
     }
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var renderedBoard = this.props.board.map(function (col) {
+      var renderedBoard = this.props.board.map(function (row) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col"
+          className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col0",
+          className: "row0",
           onClick: _this3.handleClick
-        }, "[ ", col[0], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col1",
+        }, row[0]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row1",
           onClick: _this3.handleClick
-        }, "[ ", col[1], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col2",
+        }, row[1]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row2",
           onClick: _this3.handleClick
-        }, "[ ", col[2], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col3",
+        }, row[2]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row3",
           onClick: _this3.handleClick
-        }, "[ ", col[3], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col4",
+        }, row[3]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row4",
           onClick: _this3.handleClick
-        }, "[ ", col[4], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col5",
+        }, row[4]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row5",
           onClick: _this3.handleClick
-        }, "[ ", col[5], " ]"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col6",
+        }, row[5]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row6",
           onClick: _this3.handleClick
-        }, "[ ", col[6], " ]"));
+        }, row[6]));
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+
+      if (this.props.status === "won") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, " wins!"), renderedBoard);
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "gamearea"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "login-form-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -330,10 +364,16 @@ function (_React$Component) {
         className: "gamename-input",
         placeholder: "Game name"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "numplayers",
+        value: this.state.numplayers,
+        onChange: this.update('numplayers'),
+        className: "numplayers-input",
+        placeholder: "1 or 2 players?"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "info-submit",
         type: "submit",
         value: "Submit"
-      })), renderedBoard);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, "'s turn"), renderedBoard);
     }
   }]);
 
@@ -363,10 +403,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state) {
   var currentGame = state.game || {};
-  var board = currentGame.board || [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]];
+  var currentPlayer = currentGame.current_player || "unknown";
+  var board = currentGame.board || [[" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " "]];
+  var status = currentGame.status || "making game";
   return {
-    currentGame: currentGame,
-    board: board
+    currentPlayer: currentPlayer,
+    board: board,
+    status: status
   };
 };
 

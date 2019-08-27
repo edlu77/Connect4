@@ -7,9 +7,7 @@ const App = () => {
     <div className="site-content">
       <header className="header">
       </header>
-      <div className="content-main">
-        <GameContainer />
-      </div>
+      <GameContainer />
     </div>
   );
 };
