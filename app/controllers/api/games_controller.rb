@@ -76,10 +76,8 @@ class Api::GamesController < ApplicationController
 
   def destroy
     @game = Game.find_by_name(params[:game][:name])
-    if @game.destroy
-      render :index
-    else
-      render json: @game.errors.full_messages, status: 422
+    if @game
+      @game.destroy
     end
   end
 

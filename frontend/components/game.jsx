@@ -39,6 +39,10 @@ class Game extends React.Component {
   }
 
   refresh(e) {
+    if (this.props.status === "won") {
+      const info = {name: this.state.gameName};
+      this.props.deleteGame(info);
+    }
     if (this.props.status === "waiting" || this.props.status === "play") {
       const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
       this.props.createGame(info);
@@ -46,7 +50,6 @@ class Game extends React.Component {
   }
 
   render () {
-
     const playerColor = this.props.currentPlayer === this.props.currentPlayers[0] ? "red" : "blue"
     const renderedBoard = this.props.board.map((row, idx) => {
       let colors = [];

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createGame, fetchGame, updateGame } from '../actions/game_actions';
+import { createGame, fetchGame, updateGame, deleteGame } from '../actions/game_actions';
 import Game from './game';
 
 const mapStateToProps = (state) => {
@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
     createGame: (info) => dispatch(createGame(info)),
     fetchGame: (game) => dispatch(fetchGame(game)),
     updateGame: (info) => dispatch(updateGame(info)),
+    deleteGame: (game) => dispatch(deleteGame(game)),
   })
 };
 

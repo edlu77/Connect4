@@ -21,3 +21,11 @@ export const updateGame = game => {
     data: { game }
   })
 }
+
+export const deleteGame = game => {
+  return $.ajax({
+    method: "DELETE",
+    url: '/api/game',
+    data: { game }
+  })
+}

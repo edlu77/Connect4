@@ -90,7 +90,7 @@
 /*!******************************************!*\
   !*** ./frontend/actions/game_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_GAME, createGame, fetchGame, updateGame */
+/*! exports provided: RECEIVE_GAME, createGame, fetchGame, updateGame, deleteGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGame", function() { return updateGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteGame", function() { return deleteGame; });
 /* harmony import */ var _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/game_api_util */ "./frontend/util/game_api_util.js");
 
 var RECEIVE_GAME = 'RECEIVE_GAME';
@@ -129,6 +130,11 @@ var updateGame = function updateGame(info) {
     return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["updateGame"](info).then(function (game) {
       return dispatch(receiveGame(game));
     });
+  };
+};
+var deleteGame = function deleteGame(game) {
+  return function (dispatch) {
+    return _util_game_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteGame"](game);
   };
 };
 
@@ -301,13 +307,20 @@ function (_React$Component) {
   }, {
     key: "refresh",
     value: function refresh(e) {
-      if (this.props.status === "waiting" || this.props.status === "play") {
+      if (this.props.status === "won") {
         var info = {
+          name: this.state.gameName
+        };
+        this.props.deleteGame(info);
+      }
+
+      if (this.props.status === "waiting" || this.props.status === "play") {
+        var _info = {
           name: this.state.gameName,
           user: this.state.username,
           numplayers: this.state.numplayers
         };
-        this.props.createGame(info);
+        this.props.createGame(_info);
       }
     }
   }, {
@@ -460,6 +473,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     updateGame: function updateGame(info) {
       return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["updateGame"])(info));
+    },
+    deleteGame: function deleteGame(game) {
+      return dispatch(Object(_actions_game_actions__WEBPACK_IMPORTED_MODULE_1__["deleteGame"])(game));
     }
   };
 };
@@ -660,7 +676,7 @@ var configureStore = function configureStore() {
 /*!****************************************!*\
   !*** ./frontend/util/game_api_util.js ***!
   \****************************************/
-/*! exports provided: createGame, fetchGame, updateGame */
+/*! exports provided: createGame, fetchGame, updateGame, deleteGame */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -668,6 +684,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGame", function() { return createGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGame", function() { return fetchGame; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGame", function() { return updateGame; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteGame", function() { return deleteGame; });
 var createGame = function createGame(game) {
   return $.ajax({
     method: "POST",
@@ -689,6 +706,15 @@ var fetchGame = function fetchGame(game) {
 var updateGame = function updateGame(game) {
   return $.ajax({
     method: "PATCH",
+    url: '/api/game',
+    data: {
+      game: game
+    }
+  });
+};
+var deleteGame = function deleteGame(game) {
+  return $.ajax({
+    method: "DELETE",
     url: '/api/game',
     data: {
       game: game

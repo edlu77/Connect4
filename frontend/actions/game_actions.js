@@ -25,3 +25,7 @@ export const updateGame = (info) => dispatch => {
     (game) => dispatch(receiveGame(game))
   )
 };
+
+export const deleteGame = (game) => dispatch => {
+  return GameApiUtil.deleteGame(game)
+};
