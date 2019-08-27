@@ -4,7 +4,7 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: "", gameName: "", numplayers: "", board: this.props.board}
+    this.state = {username: "", gameName: "", numplayers: "", board: this.props.board, time: Date.now()}
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -35,7 +35,7 @@ class Game extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    if (this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
+    if (Date.now()-this.state.time < 500 || this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
       return
     }
     const column = e.target.outerHTML[15];
@@ -45,6 +45,7 @@ class Game extends React.Component {
     if (this.props.currentPlayer === this.state.username) {
       const info = {name: this.state.gameName, column: column, numplayers: this.state.numplayers, currentPlayer: this.state.username};
       this.props.updateGame(info);
+      this.setState({time: Date.now()})
     }
   }
 

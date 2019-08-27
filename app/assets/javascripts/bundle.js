@@ -249,7 +249,8 @@ function (_React$Component) {
       username: "",
       gameName: "",
       numplayers: "",
-      board: _this.props.board
+      board: _this.props.board,
+      time: Date.now()
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
@@ -301,7 +302,7 @@ function (_React$Component) {
     value: function handleClick(e) {
       e.preventDefault();
 
-      if (this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
+      if (Date.now() - this.state.time < 500 || this.state.username != this.props.currentPlayer || this.props.status === "won" || this.props.status === "waiting") {
         return;
       }
 
@@ -319,6 +320,9 @@ function (_React$Component) {
           currentPlayer: this.state.username
         };
         this.props.updateGame(info);
+        this.setState({
+          time: Date.now()
+        });
       }
     }
   }, {
