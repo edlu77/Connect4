@@ -315,29 +315,43 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      var renderedBoard = this.props.board.map(function (row) {
+      var renderedBoard = this.props.board.map(function (row, idx) {
+        var colors = [];
+
+        for (var i = 0; i < row.length; i++) {
+          if (row[i] === "x") {
+            colors.push("red");
+          } else if (row[i] === "o") {
+            colors.push("blue");
+          } else {
+            colors.push("white");
+          }
+        }
+
+        ;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row"
+          className: "row",
+          key: idx
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row0",
+          className: "row0 ".concat(colors[0]),
           onClick: _this3.handleClick
         }, row[0]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row1",
+          className: "row1 ".concat(colors[1]),
           onClick: _this3.handleClick
         }, row[1]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row2",
+          className: "row2 ".concat(colors[2]),
           onClick: _this3.handleClick
         }, row[2]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row3",
+          className: "row3 ".concat(colors[3]),
           onClick: _this3.handleClick
         }, row[3]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row4",
+          className: "row4 ".concat(colors[4]),
           onClick: _this3.handleClick
         }, row[4]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row5",
+          className: "row5 ".concat(colors[5]),
           onClick: _this3.handleClick
         }, row[5]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "row6",
+          className: "row6 ".concat(colors[6]),
           onClick: _this3.handleClick
         }, row[6]));
       });

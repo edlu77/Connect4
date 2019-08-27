@@ -46,28 +46,40 @@ class Game extends React.Component {
   }
 
   render () {
-    const renderedBoard = this.props.board.map((row) => {
+    const renderedBoard = this.props.board.map((row, idx) => {
+      let colors = [];
+
+      for (let i = 0; i < row.length; i++) {
+        if (row[i] === "x") {
+          colors.push("red")
+        } else if (row[i] === "o") {
+          colors.push("blue")
+        } else {
+          colors.push("white")
+        }
+      };
+
       return (
-        <div className="row">
-          <div className="row0" onClick={this.handleClick}>
+        <div className="row" key={idx}>
+          <div className={`row0 ${colors[0]}`} onClick={this.handleClick}>
             {row[0]}
           </div>
-          <div className="row1" onClick={this.handleClick}>
+          <div className={`row1 ${colors[1]}`} onClick={this.handleClick}>
             {row[1]}
           </div>
-          <div className="row2" onClick={this.handleClick}>
+          <div className={`row2 ${colors[2]}`} onClick={this.handleClick}>
             {row[2]}
           </div>
-          <div className="row3" onClick={this.handleClick}>
+          <div className={`row3 ${colors[3]}`} onClick={this.handleClick}>
             {row[3]}
           </div>
-          <div className="row4" onClick={this.handleClick}>
+          <div className={`row4 ${colors[4]}`} onClick={this.handleClick}>
             {row[4]}
           </div>
-          <div className="row5" onClick={this.handleClick}>
+          <div className={`row5 ${colors[5]}`} onClick={this.handleClick}>
             {row[5]}
           </div>
-          <div className="row6" onClick={this.handleClick}>
+          <div className={`row6 ${colors[6]}`} onClick={this.handleClick}>
             {row[6]}
           </div>
         </div>
