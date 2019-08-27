@@ -313,9 +313,7 @@ function (_React$Component) {
           name: this.state.gameName
         };
         this.props.deleteGame(info);
-      }
-
-      if (this.props.status === "waiting" || this.props.status === "play") {
+      } else if (this.props.status === "waiting" || this.props.status === "play") {
         var _info = {
           name: this.state.gameName,
           user: this.state.username,

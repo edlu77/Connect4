@@ -42,8 +42,7 @@ class Game extends React.Component {
     if (this.props.status === "won") {
       const info = {name: this.state.gameName};
       this.props.deleteGame(info);
-    }
-    if (this.props.status === "waiting" || this.props.status === "play") {
+    } else if (this.props.status === "waiting" || this.props.status === "play") {
       const info = {name: this.state.gameName, user: this.state.username, numplayers: this.state.numplayers};
       this.props.createGame(info);
     }
