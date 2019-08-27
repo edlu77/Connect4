@@ -85,7 +85,7 @@ class Game extends React.Component {
 
     if (this.props.status === "making game") {
       return (
-        <form onSubmit={this.handleSubmit} className='loginform'>
+        <form className='loginform'>
           <input type="username-input"
             value={this.state.username}
             onChange={this.update('username')}
@@ -104,7 +104,7 @@ class Game extends React.Component {
             className="numplayers-input"
             placeholder="1 or 2 players?"
           />
-        <input className="info-submit" type="submit" value="Submit" />
+        <button className="info-submit" onClick={this.handleSubmit}>Submit</button>
         </form>
       )
     }

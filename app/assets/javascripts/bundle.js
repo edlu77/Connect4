@@ -372,7 +372,6 @@ function (_React$Component) {
 
       if (this.props.status === "making game") {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleSubmit,
           className: "loginform"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "username-input",
@@ -392,11 +391,10 @@ function (_React$Component) {
           onChange: this.update('numplayers'),
           className: "numplayers-input",
           placeholder: "1 or 2 players?"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "info-submit",
-          type: "submit",
-          value: "Submit"
-        }));
+          onClick: this.handleSubmit
+        }, "Submit"));
       }
 
       if (this.props.status === "waiting") {
