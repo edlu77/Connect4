@@ -115,7 +115,7 @@ class Game extends React.Component {
           <h1 className="gamename">
             {this.state.gameName}
           </h1>
-          <div>
+          <div className="statuspanel">
             Waiting for Player 2...
           </div>
           <div className="gameboard">
@@ -131,8 +131,11 @@ class Game extends React.Component {
           <h1 className="gamename">
             {this.state.gameName}
           </h1>
-          <div>
+          <div className="statuspanel">
             {this.props.currentPlayer} wins!
+            <button onClick={this.handleSubmit}>
+              New Game
+            </button>
           </div>
           <div className="gameboard">
             {renderedBoard}
@@ -146,7 +149,7 @@ class Game extends React.Component {
         <h1 className="gamename">
           {this.state.gameName}
         </h1>
-        <div>
+        <div className="statuspanel">
           {this.props.currentPlayer}'s turn ({playerColor})
         </div>
         <div className="gameboard">

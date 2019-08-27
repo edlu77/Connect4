@@ -400,7 +400,9 @@ function (_React$Component) {
       if (this.props.status === "waiting") {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "gamename"
-        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Waiting for Player 2..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "statuspanel"
+        }, "Waiting for Player 2..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "gameboard"
         }, renderedBoard));
       }
@@ -408,7 +410,11 @@ function (_React$Component) {
       if (this.props.status === "won") {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "gamename"
-        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, " wins!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "statuspanel"
+        }, this.props.currentPlayer, " wins!", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: this.handleSubmit
+        }, "New Game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "gameboard"
         }, renderedBoard));
       }
@@ -417,7 +423,9 @@ function (_React$Component) {
         className: "gamearea"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "gamename"
-      }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.currentPlayer, "'s turn (", playerColor, ")"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.gameName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "statuspanel"
+      }, this.props.currentPlayer, "'s turn (", playerColor, ")"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "gameboard"
       }, renderedBoard));
     }
